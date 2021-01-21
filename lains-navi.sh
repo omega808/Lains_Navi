@@ -104,17 +104,14 @@ sleep 1
 #DNS enumeration
 sublist3r -d $DOMAIN_STRIPPED | tee dns-results.h
 
-#Fingerprint, and port scan
-nmap -sS -O $DOMAIN_STRIPPED | tee fingerprint-ports.h
+#Fingerprint, port scan, vuln assesment, and traceroute, all with nmap
+nmap -A $DOMAIN_STRIPPED | tee fingerprint-ports.h
 
 #Check firewall
 wafw00f $DOMAIN | tee firewall-results.h
 
 #Check for Load Balancing
 lbd $DOMAIN | tee load-balancing.h
-
-#Get route using udp
-traceroute -U $DOMAIN | tee route.h
 
 #Get whois DNS info 
 whois $DOMAIN_STRIPPED | tee whois-records.h
