@@ -71,7 +71,7 @@ read -p "Enter Domain name: " DOMAIN
 #Make a note here to error check user input
 
 #Get IP, this took too long
-IPV4=$( ping -c 1 $DOMAIN | grep "64 bytes from " | awk '{print $5}' | cut -d":" -f1 | cut -d")" -f1 | cut -d"(" -f2 1>/dev/null ) #Check
+IPV4=$( ping -c 1 $DOMAIN | grep "64 bytes from " | awk '{print $5}' | cut -d":" -f1 | cut -d")" -f1 | cut -d"(" -f2  ) 
 
 #Write in IPv6, because not every domain supports IPv6
 
@@ -100,6 +100,9 @@ get_domain_IP
 figlet -c "Starting Scan"
 
 sleep 1
+
+#Get the subnet details of IP
+ipcalc $IPV4
 
 #DNS enumeration
 sublist3r -d $DOMAIN_STRIPPED | tee dns-results.h
